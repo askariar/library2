@@ -1,0 +1,4466 @@
+Sie haben recht, die Liste ist nicht vollständig. Hier ist die **komplette HTML-Datei mit allen 300 Fragen**, wie Sie sie im ursprünglichen Text bereitgestellt haben:
+
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>300 Fragen – Taxi- und Mietwagenkunde</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .main_box {
+            border: 0.5px solid black;
+            margin-top: 30px !important;
+            background-color: rgb(255, 255, 255);
+            margin-bottom: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .main_box:hover {
+            border: 0px solid;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
+            margin: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: aliceblue;
+        }
+        
+        .question {
+            border: 1px solid #ddd;
+            font-size: large;
+            background-color: rgb(39, 39, 39);
+            color: white;
+            box-shadow: inset 0px 0px 5px rgb(0, 0, 0);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            position: absolute;
+            visibility: hidden;
+        }
+        
+        .opt {
+            border-radius: 8px;
+            margin: 8px 0;
+            padding: 12px 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .opt:hover {
+            background-color: #e8f4ff;
+            border-color: #4da6ff;
+        }
+        
+        .opt.correct {
+            background-color: #4CAF50 !important;
+            color: white !important;
+            border-color: #388E3C;
+        }
+        
+        .opt.incorrect {
+            background-color: #f44336 !important;
+            color: white !important;
+            border-color: #d32f2f;
+        }
+        
+        label {
+            display: block;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4CAF50;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stats {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid #ddd;
+            min-width: 200px;
+            z-index: 1000;
+        }
+        
+        .stats h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .stats p {
+            margin: 8px 0;
+            font-weight: bold;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        button.reset {
+            background-color: #f44336;
+        }
+        
+        button.reset:hover {
+            background-color: #d32f2f;
+        }
+        
+        button.show-answers {
+            background-color: #2196F3;
+        }
+        
+        button.show-answers:hover {
+            background-color: #1976D2;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-right: 10px;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .filter-controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            background-color: #d5d5d5;
+        }
+        
+        .question-count {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>300 Multiple-Choice-Fragen – Taxi- und Mietwagenkunde</h1>
+    
+    <div class="stats" id="stats">
+        <h3>Statistik</h3>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p>Beantwortet: <span id="answered">0</span>/300</p>
+        <p>Richtig: <span id="correct">0</span></p>
+        <p>Falsch: <span id="incorrect">0</span></p>
+        <p>Erfolgsquote: <span id="percentage">0</span>%</p>
+        <p>Verbleibend: <span id="remaining">300</span></p>
+    </div>
+    
+    <div class="controls">
+        <button onclick="checkAllAnswers()">Alle Antworten prüfen</button>
+        <button onclick="resetAll()" class="reset">Alle zurücksetzen</button>
+        <button onclick="showAllAnswers()" class="show-answers">Alle Antworten anzeigen</button>
+        <button onclick="scrollToTop()">Nach oben</button>
+        <button onclick="scrollToBottom()">Nach unten</button>
+    </div>
+    
+    <div class="filter-controls">
+        <button class="filter-btn active" onclick="filterQuestions('all')">Alle Fragen</button>
+        <button class="filter-btn" onclick="filterQuestions('unanswered')">Unbeantwortet</button>
+        <button class="filter-btn" onclick="filterQuestions('incorrect')">Falsch beantwortet</button>
+        <button class="filter-btn" onclick="filterQuestions('correct')">Richtig beantwortet</button>
+    </div>
+    
+    <div class="question-count" id="question-count">Angezeigt: 300/300 Fragen</div>
+
+    <!-- Fragen werden hier eingefügt -->
+    <div id="questions-container">
+        <!-- Fragen werden dynamisch generiert -->
+    </div>
+
+    <script>
+        // VOLLSTÄNDIGE 300 FRAGEN-DATEN
+        const questions = [
+            {
+                id: 1,
+                question: "Welche Beförderungen unterliegen dem Personenbeförderungsrecht?",
+                options: [
+                    "Nur die unentgeltliche Beförderung",
+                    "Nur die entgeltliche oder geschäftsmäßige Beförderung von Personen mit Straßenbahnen, Oberleitungsomnibussen und Kfz",
+                    "Nur die Beförderung mit Taxis",
+                    "Alle Personenbeförderungen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 2,
+                question: "Welche Verordnung regelt den Betrieb von Kraftfahrunternehmen im Personenverkehr?",
+                options: [
+                    "StVO",
+                    "BOKraft",
+                    "FeV",
+                    "PBefG"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 3,
+                question: "Welche Rechtsfolge ergibt sich, wenn eine Personenbeförderung unter die Freistellungsverordnung fällt?",
+                options: [
+                    "Es ist eine Genehmigung erforderlich",
+                    "Es sind alle Pflichten aus dem PBefG zu erfüllen",
+                    "Es bedarf keiner Genehmigung und keine Pflichten aus dem PBefG müssen erfüllt werden",
+                    "Es gilt nur die Tarifpflicht"
+                ],
+                correctAnswer: "C",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 4,
+                question: "Nennen Sie drei Formen des Freistellungsverkehrs.",
+                options: [
+                    "Schüler-, Behinderten- und Kindergartenfahrten",
+                    "Taxi-, Mietwagen- und Linienverkehr",
+                    "Ausflugs-, Kranken- und Behindertenfahrten",
+                    "Gelegenheits-, Linien- und Ausflugsverkehr"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 5,
+                question: "Was versteht das Personenbeförderungsrecht unter einem Pkw?",
+                options: [
+                    "Ein Fahrzeug mit mehr als 9 Sitzplätzen",
+                    "Ein Kfz zur Beförderung von nicht mehr als 9 Personen einschließlich Fahrer",
+                    "Ein Fahrzeug nur für Güterbeförderung",
+                    "Ein Fahrzeug mit Anhänger"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 6,
+                question: "Wo können Sie Informationen zur Gründung eines Taxi- oder Mietwagenunternehmens erhalten?",
+                options: [
+                    "Beim Finanzamt",
+                    "Bei der Industrie- und Handelskammer und der unteren Straßenverkehrsbehörde",
+                    "Beim Gesundheitsamt",
+                    "Bei der Polizei"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 7,
+                question: "Welche persönlichen Voraussetzungen müssen für die Genehmigung erfüllt sein?",
+                options: [
+                    "Nur fachliche Eignung",
+                    "Zuverlässigkeit, fachliche Eignung und finanzielle Leistungsfähigkeit",
+                    "Nur finanzielle Sicherheit",
+                    "Nur polizeiliches Führungszeugnis"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 8,
+                question: "Wie wird die persönliche Zuverlässigkeit geprüft?",
+                options: [
+                    "Nur durch ein polizeiliches Führungszeugnis",
+                    "Durch Auskünfte aus Verkehrszentralregister, Gewerbezentralregister, polizeilichem Führungszeugnis, Handelsregister, Finanzamt, Krankenkasse, Berufsgenossenschaft",
+                    "Nur durch eine mündliche Befragung",
+                    "Durch einen Eignungstest"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 9,
+                question: "Welche Unterlagen müssen bei Antragstellung vorgelegt werden?",
+                options: [
+                    "Nur Personalausweis",
+                    "Zeugnis der IHK, polizeiliches Führungszeugnis, Auszüge aus Registern, Unbedenklichkeitsbescheinigungen, Eigenkapitalnachweis, Antragsformular",
+                    "Nur Steuerbescheid",
+                    "Nur Fahrzeugbrief"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 10,
+                question: "Wer ist die zuständige Genehmigungsbehörde?",
+                options: [
+                    "Oberste Landesbehörde",
+                    "Untere Straßenverkehrsbehörde",
+                    "Industrie- und Handelskammer",
+                    "Finanzamt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 11,
+                question: "Wie lange ist eine Taxikonzession gültig?",
+                options: [
+                    "1 Jahr",
+                    "2 Jahre",
+                    "5 Jahre",
+                    "Unbefristet"
+                ],
+                correctAnswer: "C",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 12,
+                question: "Muss die Originalurkunde während der Fahrt mitgeführt werden?",
+                options: [
+                    "Ja, immer",
+                    "Nein, sie bleibt im Büro, es wird ein Genehmigungsauszug mitgeführt",
+                    "Nur bei Auslandsfahrten",
+                    "Nur bei Kontrollen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 13,
+                question: "Wann ist die wirtschaftliche Leistungsfähigkeit gewährleistet?",
+                options: [
+                    "Wenn der Unternehmer über ausreichende Eigenmittel verfügt (2.250 € erstes Fahrzeug, 1.250 € jedes weitere)",
+                    "Wenn ein Kredit vorliegt",
+                    "Wenn keine Schulden vorhanden sind",
+                    "Wenn ein Bürge vorhanden ist"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 14,
+                question: "Kann ein Arbeitsloser finanzielle Unterstützung zur Existenzgründung erhalten?",
+                options: [
+                    "Nein",
+                    "Ja, als Überbrückungsgeld mit Weiterzahlung des Arbeitslosengeldes bis zu 6 Monaten",
+                    "Nur als Darlehen",
+                    "Nur in Form von Steuervergünstigungen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 15,
+                question: "Wie kann der Sachkundenachweis erbracht werden?",
+                options: [
+                    "Nur durch eine IHK-Prüfung",
+                    "Durch 3-jährige leitende Tätigkeit, IHK-Prüfung oder bestimmte Abschlüsse",
+                    "Nur durch ein Studium",
+                    "Durch eine Fahrprüfung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 16,
+                question: "Wie lange wird eine Taxigenehmigung bei erstmaliger Erteilung höchstens gewährt?",
+                options: [
+                    "1 Jahr",
+                    "2 Jahre",
+                    "5 Jahre",
+                    "10 Jahre"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 17,
+                question: "Wird die Genehmigung nach Ablauf automatisch verlängert?",
+                options: [
+                    "Ja",
+                    "Nein, es bedarf eines Antrags",
+                    "Nur bei guter Führung",
+                    "Nur wenn keine Beanstandungen vorliegen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 18,
+                question: "Für wie lange wird eine Genehmigung höchstens wieder erteilt?",
+                options: [
+                    "2 Jahre",
+                    "3 Jahre",
+                    "5 Jahre",
+                    "10 Jahre"
+                ],
+                correctAnswer: "C",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 19,
+                question: "Welche Einflussgrößen berücksichtigt die Genehmigungsbehörde bei der Beurteilung der Funktionsfähigkeit des Taxigewerbes?",
+                options: [
+                    "Nur die Taxendichte",
+                    "Nachfrage, Taxendichte, Ertragslage, Anzahl der Geschäftsaufgaben",
+                    "Nur die Anzahl der Fahrzeuge",
+                    "Nur die Tarifgestaltung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 20,
+                question: "Welche Behörde ist für Taxi- und Mietwagenunternehmer zuständig?",
+                options: [
+                    "Bundesverkehrsministerium",
+                    "Straßenverkehrsbehörde einer kreisfreien Stadt oder eines Landkreises",
+                    "Finanzamt",
+                    "Gewerbeaufsichtsamt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 21,
+                question: "Wer erteilt die Genehmigung?",
+                options: [
+                    "IHK",
+                    "Untere Straßenverkehrsbehörde",
+                    "Polizei",
+                    "Finanzamt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 22,
+                question: "Nennen Sie vier Stufen des Genehmigungsverfahrens.",
+                options: [
+                    "Antrag, Anhörung, Prüfung, Entscheidung",
+                    "Antrag, Zahlung, Prüfung, Erteilung",
+                    "Anhörung, Bescheid, Widerspruch, Genehmigung",
+                    "Prüfung, Entscheidung, Aushändigung, Kontrolle"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 23,
+                question: "Welche sind gesetzliche Anhörstellen?",
+                options: [
+                    "Nur IHK und Gewerbeaufsicht",
+                    "Gemeinde, Gewerbeaufsicht, IHK, Fachgewerkschaften, Verkehrsverbände",
+                    "Nur Polizei und Finanzamt",
+                    "Nur Verkehrsverbände"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 24,
+                question: "Was muss der Antrag auf Genehmigung enthalten?",
+                options: [
+                    "Nur Name und Adresse",
+                    "Persönliche Daten, Angaben zum Verkehr, Fahrzeugen, Unterlagen zur Zuverlässigkeit und Eignung",
+                    "Nur Finanzplan",
+                    "Nur Fahrzeugdaten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 25,
+                question: "Welche Inhalte hat die Genehmigungsurkunde?",
+                options: [
+                    "Nur Name und Gültigkeitsdauer",
+                    "Name, Verkehrsart, Gültigkeitsdauer, Bedingungen, Kennzeichen, Hinweise auf Gesetze, Aufsichtsbehörde",
+                    "Nur Steuernummer",
+                    "Nur Fahrzeugdaten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 26,
+                question: "Was ist Mietwagenverkehr?",
+                options: [
+                    "Beförderung mit festen Linien",
+                    "Beförderung mit Pkw, die nur im Ganzen gemietet werden, Ziel und Ablauf bestimmt der Mieter",
+                    "Beförderung mit Taxen",
+                    "Beförderung mit Omnibussen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 27,
+                question: "Was ist Taxiverkehr?",
+                options: [
+                    "Beförderung mit festen Linien",
+                    "Beförderung mit Pkw, die an behördlich zugelassenen Stellen bereitgehalten werden, Ziel bestimmt der Fahrgast",
+                    "Nur Ausflugsfahrten",
+                    "Nur Krankenbeförderungen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 28,
+                question: "Welche Rücksichten ergeben sich für den Mietwagenunternehmer?",
+                options: [
+                    "Er darf im Taxibereich tätig werden",
+                    "Er darf nicht im den Taxen vorbehaltenen Bereich tätig werden",
+                    "Er muss Taxitarife anwenden",
+                    "Er muss Taxistände nutzen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 29,
+                question: "Was ist der wesentliche Unterschied zwischen Taxi- und Mietwagenverkehr?",
+                options: [
+                    "Beide unterliegen der Tarifpflicht",
+                    "Taxi unterliegt Beförderungs-, Betriebs- und Tarifpflicht, Mietwagen nicht",
+                    "Mietwagen unterliegt der Tarifpflicht, Taxi nicht",
+                    "Beide dürfen Fahrgäste an der Straße aufnehmen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 30,
+                question: "Hat der Mietwagenunternehmer eine Beförderungspflicht?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur innerhalb des Pflichtfahrbereichs",
+                    "Nur bei Vorbestellung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 31,
+                question: "Ist der Mietwagenunternehmer an Tarife gebunden?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur innerorts",
+                    "Nur bei Auslandsfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 32,
+                question: "Was ist der Betriebssitz?",
+                options: [
+                    "Der Wohnsitz des Unternehmers",
+                    "Der geschäftliche Standort innerhalb der Betriebssitzgemeinde",
+                    "Der Standort der Fahrzeuge",
+                    "Der Ort der IHK"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 33,
+                question: "Wer bestimmt im Mietwagenverkehr das Ziel?",
+                options: [
+                    "Der Unternehmer",
+                    "Der Fahrgast",
+                    "Die Genehmigungsbehörde",
+                    "Die Taxizentrale"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 34,
+                question: "Können Mietwagen von verschiedenen Fahrgästen gesplittert angemietet werden?",
+                options: [
+                    "Ja",
+                    "Nein, nur im Ganzen",
+                    "Nur mit Genehmigung",
+                    "Nur außerhalb des Pflichtfahrbereichs"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 35,
+                question: "Was ist beim Bereithalten von Mietwagen zu beachten?",
+                options: [
+                    "Dass es nicht zu Verwechslung mit Taxiverkehr führt",
+                    "Dass es an Taxiständen erfolgt",
+                    "Dass es rund um die Uhr erfolgt",
+                    "Dass es nur nachts erfolgt"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 36,
+                question: "Was ist der Zweck der gesetzlichen Bestimmungen zum Mietwagenverkehr?",
+                options: [
+                    "Schutz des Taxigewerbes",
+                    "Förderung des Wettbewerbs",
+                    "Steuererhöhung",
+                    "Umweltschutz"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 37,
+                question: "Dürfen Mietwagenunternehmer Werbung betreiben?",
+                options: [
+                    "Nein",
+                    "Ja, aber nicht zur Verwechslung mit Taxiverkehr",
+                    "Nur mit Genehmigung",
+                    "Nur am Fahrzeug"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 38,
+                question: "Dürfen im Mietwagenverkehr bei Leerfahrten Fahrgäste aufgenommen werden?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Genehmigung",
+                    "Nur im Pflichtfahrbereich"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 39,
+                question: "Gibt es Ausnahmen vom Verbot der Fahrgastaufnahme bei Leerfahrten?",
+                options: [
+                    "Nein",
+                    "Ja, bei neuem Funkauftrag",
+                    "Nur bei Notfällen",
+                    "Nur außerorts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 40,
+                question: "Dürfen Mietwagen Taxizeichen führen?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Genehmigung",
+                    "Nur außerhalb des Pflichtfahrbereichs"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 41,
+                question: "Was muss der Mietwagenunternehmer bezüglich Beförderungsaufträgen beachten?",
+                options: [
+                    "Nichts",
+                    "Buchmäßige Erfassung und Aufbewahrung für 1 Jahr",
+                    "Nur mündliche Vereinbarung",
+                    "Nur bei Auslandsfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 42,
+                question: "Welchen Pflichten unterliegt der Taxiverkehr?",
+                options: [
+                    "Nur Tarifpflicht",
+                    "Beförderungs-, Betriebs- und Tarifpflicht",
+                    "Nur Betriebspflicht",
+                    "Nur Beförderungspflicht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 43,
+                question: "Wo besteht für den Taxifahrer die Beförderungspflicht?",
+                options: [
+                    "Überall",
+                    "Nur im Pflichtfahrbereich",
+                    "Nur an Taxiständen",
+                    "Nur bei Vorbestellung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 44,
+                question: "Wo dürfen Taxen bereitgestellt werden?",
+                options: [
+                    "Überall",
+                    "Nur an behördlich zugelassenen Stellen in der Betriebssitzgemeinde",
+                    "Nur außerhalb der Gemeinde",
+                    "Nur auf Privatgrund"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 45,
+                question: "Wie sind Taxistände gekennzeichnet?",
+                options: [
+                    "Mit blauem Schild",
+                    "Mit rot-blau-weißem Zeichen 'TAXI'",
+                    "Mit gelbem Licht",
+                    "Mit grünem Schild"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 46,
+                question: "Dürfen Mietwagen auf öffentlichen Straßen bereitgestellt werden?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Genehmigung",
+                    "Nur nachts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 47,
+                question: "Welche Pflicht betrifft den Mietwagenbetrieb nicht?",
+                options: [
+                    "Rückkehrpflicht",
+                    "Tarifpflicht",
+                    "Aufzeichnungspflicht",
+                    "Verbot der Verwendung von Taxizeichen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 48,
+                question: "Kann ein Taxiunternehmer außerhalb der Halteplätze Fahrgäste aufnehmen?",
+                options: [
+                    "Nein",
+                    "Ja, wenn er frei ist",
+                    "Nur mit Genehmigung",
+                    "Nur bei Dunkelheit"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 49,
+                question: "Darf ein Taxifahrer Fahrgäste außerhalb der Betriebsgemeinde aufnehmen?",
+                options: [
+                    "Immer",
+                    "Grundsätzlich nicht, Ausnahmen möglich",
+                    "Nie",
+                    "Nur mit Zustimmung des Fahrgastes"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 50,
+                question: "Kann der Taxiunternehmer Aufträge nur an Taxiständen entgegennehmen?",
+                options: [
+                    "Ja",
+                    "Nein, auch während der Fahrt oder am Betriebssitz",
+                    "Nur per Funk",
+                    "Nur schriftlich"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 51,
+                question: "Wer darf ein Taxi- oder Mietwagengewerbe betreiben?",
+                options: [
+                    "Jeder",
+                    "Nur mit Genehmigung",
+                    "Nur Personen über 50 Jahre",
+                    "Nur Unternehmen mit mehr als 5 Fahrzeugen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 52,
+                question: "Welcher Schaden kann bei verfehlter Abholadresse geltend gemacht werden?",
+                options: [
+                    "Nur Personenschaden",
+                    "Vermögensschaden",
+                    "Nur Sachschaden",
+                    "Kein Schaden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 53,
+                question: "Was ist öffentlicher Personennahverkehr?",
+                options: [
+                    "Nur Taxiverkehr",
+                    "Beförderung mit Straßenbahnen, Obussen, Kfz im Linienverkehr",
+                    "Nur Mietwagenverkehr",
+                    "Nur Gelegenheitsverkehr"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 54,
+                question: "Warum gilt das Taxi als ÖPNV?",
+                options: [
+                    "Weil es billiger ist",
+                    "Weil es Beförderungs-, Betriebs- und Tarifpflicht unterliegt",
+                    "Weil es schneller ist",
+                    "Weil es umweltfreundlicher ist"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 55,
+                question: "In welcher Gemeinde darf das Taxi bereitgehalten werden?",
+                options: [
+                    "In jeder Gemeinde",
+                    "Nur in der Betriebssitzgemeinde",
+                    "Nur in Nachbargemeinden",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 56,
+                question: "Dürfen Fahrten außerhalb der Betriebssitzgemeinde ausgeführt werden?",
+                options: [
+                    "Nie",
+                    "Ja, auf vorherige Bestellung",
+                    "Nur mit Sondergenehmigung",
+                    "Nur bei Tag"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 57,
+                question: "Welche Regeln hat der Mietwagenunternehmer nach PBefG zu beachten?",
+                options: [
+                    "Keine",
+                    "Verwechslungsverbot, Aufzeichnungspflicht, Rückkehrpflicht, keine Taxizeichen",
+                    "Tarifpflicht",
+                    "Beförderungspflicht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 58,
+                question: "Was ist Rückkehrpflicht?",
+                options: [
+                    "Pflicht zur Rückkehr nach jedem Auftrag zum Betriebssitz",
+                    "Pflicht zur Rückkehr nur bei Leerfahrten",
+                    "Pflicht zur Rückkehr nur nachts",
+                    "Keine Pflicht"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 59,
+                question: "Zu welcher Verkehrsform gehört Taxi- und Mietwagenverkehr?",
+                options: [
+                    "Linienverkehr",
+                    "Gelegenheitsverkehr",
+                    "Güterverkehr",
+                    "Sonderverkehr"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 60,
+                question: "Was ist Gelegenheitsverkehr?",
+                options: [
+                    "Linienverkehr",
+                    "Beförderung mit Kfz, die nicht Linienverkehr ist",
+                    "Nur Taxiverkehr",
+                    "Nur Mietwagenverkehr"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 61,
+                question: "Was ist Linienverkehr?",
+                options: [
+                    "Gelegenheitsverkehr",
+                    "Regelmäßige Verkehrsbindung zwischen festen Punkten mit Haltestellen",
+                    "Nur Taxiverkehr",
+                    "Nur Schülerfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 62,
+                question: "Welche Formen des Gelegenheitsverkehrs gibt es außer Taxi und Mietwagen?",
+                options: [
+                    "Keine",
+                    "Ausflugsfahrten, Ferienzielreisen, Mietomnibusverkehr",
+                    "Linienverkehr",
+                    "Güterverkehr"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 63,
+                question: "Welcher Verkehr fällt nicht unter Gelegenheitsverkehr?",
+                options: [
+                    "Taxiverkehr",
+                    "Schülerfahrten",
+                    "Mietwagenverkehr",
+                    "Ausflugsfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 64,
+                question: "Ist Krankenbeförderung Gelegenheitsverkehr?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Genehmigung",
+                    "Nur bei Taxen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 65,
+                question: "Wer darf sitzende Krankenbeförderung durchführen?",
+                options: [
+                    "Jeder",
+                    "Nur Rettungsdienst",
+                    "Nur Fahrpersonal in genehmigten Taxis oder Mietwagen",
+                    "Nur Arzt"
+                ],
+                correctAnswer: "C",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 66,
+                question: "Wer ist Unternehmer im Sinne des PBefG?",
+                options: [
+                    "Jeder Fahrer",
+                    "Wer in eigenem Namen, unter eigener Verantwortung und für eigene Rechnung den Verkehr betreibt und eine Genehmigung hat",
+                    "Nur Kapitalgesellschaften",
+                    "Nur Einzelunternehmer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 67,
+                question: "Welche Sachgebiete muss der Unternehmer in der Eignungsprüfung nachweisen?",
+                options: [
+                    "Nur Steuerrecht",
+                    "Personenbeförderungsrecht, Arbeitsrecht, Sozialversicherungsrecht, Straßenverkehrsrecht, Beförderungsvertragsrecht, Steuerrecht, kaufmännische Führung, Technik, Sicherheit, Umweltschutz",
+                    "Nur Fahrzeugtechnik",
+                    "Nur Tarifrecht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 68,
+                question: "Wie viele Taxigenehmigungen können einem Unternehmer erteilt werden?",
+                options: [
+                    "So viele wie er will",
+                    "Nur eine",
+                    "Maximal fünf",
+                    "So viele wie Fahrzeuge"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 69,
+                question: "Wo meldet man sein Gewerbe an?",
+                options: [
+                    "Beim Finanzamt",
+                    "Beim Gewerbeamt der Betriebssitzgemeinde",
+                    "Bei der IHK",
+                    "Bei der Berufsgenossenschaft"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 70,
+                question: "Benötigt man für ein zweites Taxifahrzeug eine neue Genehmigung?",
+                options: [
+                    "Ja",
+                    "Nein, nur einen weiteren Auszug",
+                    "Nur bei Fahrzeugwechsel",
+                    "Nur bei Wechsel des Fahrers"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 71,
+                question: "Wann bedarf es einer Genehmigung bei Betriebsveränderung?",
+                options: [
+                    "Nie",
+                    "Bei Neuzulassung eines Fahrzeugs oder Übertragung der Betriebsführung",
+                    "Nur bei Farbwechsel",
+                    "Nur bei Wechsel des Standorts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 72,
+                question: "Was ist Übertragung der Genehmigung?",
+                options: [
+                    "Wechsel des Fahrzeugs",
+                    "Vollständige Übertragung der Konzession auf einen anderen Unternehmer",
+                    "Wechsel des Fahrers",
+                    "Wechsel des Betriebssitzes"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 73,
+                question: "Was prüft die Behörde bei Übertragung?",
+                options: [
+                    "Nur Alter",
+                    "Zuverlässigkeit, fachliche Eignung, finanzielle Leistungsfähigkeit des neuen Unternehmers",
+                    "Nur Fahrzeugzustand",
+                    "Nur Steuerzahlungen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 74,
+                question: "Was ist bei der Genehmigungsurkunde während der Fahrt zu beachten?",
+                options: [
+                    "Sie muss mitgeführt und auf Verlangen vorgezeigt werden",
+                    "Sie muss zu Hause bleiben",
+                    "Sie muss beim Finanzamt hinterlegt sein",
+                    "Sie muss nur bei Kontrollen vorliegen"
+                ],
+                correctAnswer: "A",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 75,
+                question: "Für welches Gebiet wird die Genehmigung erteilt?",
+                options: [
+                    "Für das gesamte Bundesland",
+                    "Nur für die Betriebssitzgemeinde",
+                    "Für ganz Deutschland",
+                    "Für den Pflichtfahrbereich"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 76,
+                question: "Was ist der Genehmigungsbereich?",
+                options: [
+                    "Der Pflichtfahrbereich",
+                    "Das Gebiet der Betriebssitzgemeinde",
+                    "Das gesamte Stadtgebiet",
+                    "Der Bereich der Tarifbindung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 77,
+                question: "Was ist der Pflichtfahrbereich?",
+                options: [
+                    "Der Genehmigungsbereich",
+                    "Der Geltungsbereich der behördlich festgesetzten Taxitarife",
+                    "Das gesamte Stadtgebiet",
+                    "Der Bereich der Betriebssitzgemeinde"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 78,
+                question: "Wie unterscheiden sich Genehmigungsbereich und Pflichtfahrbereich?",
+                options: [
+                    "Sie sind gleich",
+                    "Genehmigungsbereich ist größer, im Pflichtfahrbereich besteht Beförderungspflicht",
+                    "Pflichtfahrbereich ist größer",
+                    "Nur der Genehmigungsbereich ist relevant"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 79,
+                question: "Gibt es Fahrzeuge mit Doppelgenehmigung?",
+                options: [
+                    "Nein",
+                    "Ja, in Gemeinden bis 50.000 Einwohnern, falls nicht eingeschränkt",
+                    "Nur in Großstädten",
+                    "Nur bei Sondergenehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 80,
+                question: "Was regelt die Droschkenordnung?",
+                options: [
+                    "Nur Tarife",
+                    "Ordnung auf Taxiständen, Dienstbetrieb, Bereitschaftsdienst, Fernaufträge, Funkbetrieb, Krankenbeförderung",
+                    "Nur Umweltschutz",
+                    "Nur Fahrzeugausstattung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 81,
+                question: "Wer erlässt Taxiordnungen?",
+                options: [
+                    "IHK",
+                    "Landesregierung oder ermächtigte Genehmigungsbehörde",
+                    "Kommunen",
+                    "Verkehrsverbände"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 82,
+                question: "Welche Bedeutung hat ein Auszug aus der Genehmigung?",
+                options: [
+                    "Keine",
+                    "Er muss während der Fahrt mitgeführt werden",
+                    "Er dient nur zur Information",
+                    "Er ersetzt den Fahrzeugschein"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 83,
+                question: "Muss ein Mietwagenfahrer in einer Kleinstadt eine Ortskenntnisprüfung ablegen?",
+                options: [
+                    "Immer",
+                    "Nein, nur bei über 50.000 Einwohnern",
+                    "Nur bei Taxifahrern",
+                    "Nur bei Auslandsfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 84,
+                question: "Was gilt bei Umzug eines Mietwagenfahrers in eine größere Stadt?",
+                options: [
+                    "Er darf sofort fahren",
+                    "Er muss Ortskenntnis für den neuen Ort nachweisen",
+                    "Er braucht keine neue Prüfung",
+                    "Er muss eine neue Fahrerlaubnis beantragen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 85,
+                question: "Wo dürfen Taxen bereitgestellt werden?",
+                options: [
+                    "Überall",
+                    "Nur an Taxiständen innerhalb der Betriebssitzgemeinde",
+                    "Nur am Betriebssitz",
+                    "Gar nicht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 86,
+                question: "Was heißt BOKraft?",
+                options: [
+                    "Betriebsordnung für Kraftfahrzeuge",
+                    "Verordnung über den Betrieb von Kraftfahrunternehmen im Personenverkehr",
+                    "Berufsordnung für Kraftfahrer",
+                    "Bundesordnung Kraftverkehr"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 87,
+                question: "Für wen gilt die BOKraft?",
+                options: [
+                    "Nur für Taxis",
+                    "Für Unternehmen, die Fahrgäste mit Kfz oder Obussen befördern und dem PBefG unterliegen",
+                    "Nur für Linienverkehr",
+                    "Nur für Mietwagen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 88,
+                question: "Was regelt die BOKraft?",
+                options: [
+                    "Nur Fahrzeugausstattung",
+                    "Betrieb, Ausrüstung, Sondervorschriften, Untersuchungen",
+                    "Nur Tarife",
+                    "Nur Sozialversicherung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 89,
+                question: "Welche Pflichten hat der Unternehmer nach BOKraft?",
+                options: [
+                    "Keine",
+                    "Kontrolle der Einhaltung von Vorschriften, ordnungsgemäße Führung, vorschriftsmäßiger Zustand, Einsatz geeigneten Personals",
+                    "Nur Steuerzahlung",
+                    "Nur Fahrzeugwartung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 90,
+                question: "Was enthält eine Dienstanweisung?",
+                options: [
+                    "Nur Gehaltsliste",
+                    "Aufgabenbereich, Verantwortlichkeit, Verhalten, Maßnahmen bei Unfällen",
+                    "Nur Urlaubsregelung",
+                    "Nur Arbeitszeiten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 91,
+                question: "Was kann in Dienstplänen geregelt sein?",
+                options: [
+                    "Nur Pausen",
+                    "Zeitlich und örtlich angepasstes Taxiangebot",
+                    "Nur Schichtwechsel",
+                    "Nur Urlaubsplanung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 92,
+                question: "Was ist ein Betriebsleiter?",
+                options: [
+                    "Der Eigentümer",
+                    "Ein Angestellter, der Pflichten des Unternehmers wahrnimmt, ohne diesen von der Verantwortung zu entlasten",
+                    "Der Fahrer",
+                    "Der Disponent"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 93,
+                question: "Wann muss ein Betriebsleiter bestellt werden?",
+                options: [
+                    "Immer",
+                    "Bei Anordnung der Behörde, bei über 10 Kfz oder betrieblichen Umständen",
+                    "Nur bei Kapitalgesellschaften",
+                    "Nur bei mehr als 20 Fahrzeugen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 94,
+                question: "Welche Vorkommnisse müssen gemeldet werden?",
+                options: [
+                    "Nur kleine Schäden",
+                    "Öffentlich aufsehenerregende Vorkommnisse, Unfälle mit Toten oder Schwerverletzten, Betriebsstörungen über 24 Std.",
+                    "Nur Personalwechsel",
+                    "Nur Reparaturen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 95,
+                question: "Wie müssen sich Taxifahrer gegenüber Fahrgästen verhalten?",
+                options: [
+                    "Gleichgültig",
+                    "Rücksichtsvoll und besonnen",
+                    "Streng",
+                    "Nur freundlich bei gutem Trinkgeld"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 96,
+                question: "Welche Regeln gelten für das Fahrpersonal?",
+                options: [
+                    "Keine",
+                    "Rücksichtsvolles Verhalten, kein Alkohol, Rauchverbot, kein Fernsehen, kein Dienst bei ansteckenden Krankheiten",
+                    "Nur Anschnallpflicht",
+                    "Nur Geschwindigkeitsbegrenzung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 97,
+                question: "Wie sind Fundsachen zu behandeln?",
+                options: [
+                    "Behalten",
+                    "Nach jeder Fahrt prüfen, bei Nichtrückgabe im Betrieb oder bei benannter Stelle abgeben",
+                    "Wegwerfen",
+                    "Nur bei Wertgegenständen abgeben"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 98,
+                question: "Bei welchen Erkrankungen darf kein Fahrer eingesetzt werden?",
+                options: [
+                    "Bei jeder Erkrankung",
+                    "Bei ansteckenden Krankheiten oder wenn die Fahreignung beeinträchtigt ist",
+                    "Nur bei schweren Erkrankungen",
+                    "Nur bei Fieber"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 99,
+                question: "Welche Papiere muss ein Mietwagenfahrer mitführen?",
+                options: [
+                    "Nur Führerschein",
+                    "Führerschein, Fahrerlaubnis zur Fahrgastbeförderung, Fahrzeugschein, AU, Genehmigungsauszug, Funkgenehmigung, Sozialversicherungsausweis",
+                    "Nur Personalausweis",
+                    "Nur Versicherungskarte"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 100,
+                question: "Darf während des Fahrauftrags geraucht werden?",
+                options: [
+                    "Ja",
+                    "Nein, absolutes Rauchverbot",
+                    "Nur wenn der Fahrgast zustimmt",
+                    "Nur bei offenem Fenster"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+			 // Fortsetzung für Fragen 101-200
+            {
+                id: 101,
+                question: "Welchen Weg muss der Taxifahrer wählen?",
+                options: [
+                    "Den schnellsten",
+                    "Den kürzesten, sofern der Fahrgast nichts anderes bestimmt",
+                    "Den landschaftlich schönsten",
+                    "Den mit wenig Ampeln"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 102,
+                question: "Welchen Weg muss der Mietwagenfahrer wählen?",
+                options: [
+                    "Den kürzesten",
+                    "Den verkehrsgünstigen, sofern der Fahrgast nichts anderes bestimmt",
+                    "Den schnellsten",
+                    "Den günstigsten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 103,
+                question: "Ist der Taxifahrer verpflichtet, Gepäck zu befördern?",
+                options: [
+                    "Nein",
+                    "Ja, aber ohne Gefährdung der Sicherheit, kein Anspruch auf gefährliche Güter",
+                    "Nur gegen Aufpreis",
+                    "Nur bis 20 kg"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 104,
+                question: "Wie viel Gepäck muss ein Taxi mindestens befördern können?",
+                options: [
+                    "20 kg",
+                    "50 kg",
+                    "100 kg",
+                    "Keine Vorgabe"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 105,
+                question: "Wann können Personen von der Beförderung ausgeschlossen werden?",
+                options: [
+                    "Nie",
+                    "Bei Gefahr für Sicherheit und Ordnung, z. B. Betrunkene oder Bewaffnete",
+                    "Nur bei fehlendem Fahrgeld",
+                    "Nur bei schlechtem Wetter"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 106,
+                question: "Was ist dem Fahrgast während der Fahrt untersagt?",
+                options: [
+                    "Nichts",
+                    "Türen öffnen, Gegenstände werfen, besetztes Fahrzeug betreten, rauchen, Fernsehempfänger benutzen",
+                    "Nur Telefonieren",
+                    "Nur Essen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 107,
+                question: "Darf ein Taxi ohne Fahrgastbeförderungserlaubnis fahren?",
+                options: [
+                    "Nie",
+                    "Ja, wenn nicht zur Fahrgastbeförderung bereitgehalten, z. B. Werkstattfahrt",
+                    "Nur mit Sondergenehmigung",
+                    "Nur bei Leerfahrt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 108,
+                question: "Muss ein Taxi ein Schild mit Ordnungsnummer haben?",
+                options: [
+                    "Nein",
+                    "Ja, an der rechten unteren Heckscheibe",
+                    "Nur auf dem Dach",
+                    "Nur innen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 109,
+                question: "Müssen Taxis eine Alarmanlage haben?",
+                options: [
+                    "Nein",
+                    "Ja, laut BOKraft",
+                    "Nur in Großstädten",
+                    "Nur bei Nachtfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 110,
+                question: "Wie muss die Alarmanlage beschaffen sein?",
+                options: [
+                    "Nur akustisch",
+                    "Vom Fahrersitz aus betätigbar, Hupe, Blinker, ggf. Taxischild blinkend",
+                    "Nur stiller Alarm",
+                    "Nur per Funk"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 111,
+                question: "Wie viele Türen müssen Taxis mindestens haben?",
+                options: [
+                    "1",
+                    "2 auf der rechten Seite",
+                    "4",
+                    "Keine Vorgabe"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 112,
+                question: "Was ist bei der Beförderung von Kindern unter 12 Jahren zu beachten?",
+                options: [
+                    "Nichts",
+                    "Kinder unter 150 cm nur hinten, Rückhalteeinrichtungen, Kleinkinder nicht gesichert",
+                    "Nur Anschnallpflicht",
+                    "Nur mit Kindersitz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 113,
+                question: "Nennen Sie zwei äußere Merkmale eines Taxis.",
+                options: [
+                    "Jede Farbe",
+                    "Hell-elfenbeinfarbiger Anstrich, Taxischild auf dem Dach",
+                    "Nur Dachschild",
+                    "Nur bestimmte Größe"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 114,
+                question: "Wie muss ein Taxi ausgestattet sein?",
+                options: [
+                    "Beliebig",
+                    "Hell-elfenbeinfarbig, Taxischild, Ordnungsnummer, Alarmanlage, Fahrpreisanzeiger, Schild mit Namen, Sicherheitsgurte, Nichtrauchersymbol, 2 Türen rechts, 2 Achsen",
+                    "Nur mit Funk",
+                    "Nur mit Klimaanlage"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 115,
+                question: "Welche weitere Beschriftung muss ein Taxi enthalten?",
+                options: [
+                    "Keine",
+                    "Schild mit Ordnungsnummer an Heckscheibe, Schild mit Namen und Betriebssitz innen",
+                    "Nur Werbung",
+                    "Nur Herstellerlogo"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 116,
+                question: "Welche Ausrüstungsgegenstände sind mitzuführen?",
+                options: [
+                    "Keine",
+                    "Erste-Hilfe-Material, Rückhalteeinrichtung für Kinder, Warnweste, Warndreieck, ggf. Winterausrüstung",
+                    "Nur Feuerlöscher",
+                    "Nur Abschleppseil"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 117,
+                question: "Welche Kleidung ist bei Reparaturen und Unfällen vorgeschrieben?",
+                options: [
+                    "Arbeitskleidung",
+                    "Warnweste",
+                    "Helm",
+                    "Keine Vorschrift"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 118,
+                question: "Wo ist das Taxischild anzubringen?",
+                options: [
+                    "An der Frontscheibe",
+                    "Auf dem Dach, quer zur Fahrtrichtung, beleuchtbar, mit 'TAXI'",
+                    "An der Seite",
+                    "Im Innenraum"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 119,
+                question: "Wann muss das Taxischild beleuchtet sein?",
+                options: [
+                    "Immer",
+                    "Innerhalb des Pflichtfahrgebiets ohne Auftrag",
+                    "Nur nachts",
+                    "Nur bei Regen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 120,
+                question: "Warum dürfen Mietwagen keine Nichtrauchersymbole haben?",
+                options: [
+                    "Weil sie rauchen dürfen",
+                    "Weil sie keine Beförderungspflicht haben, der Fahrer kann Rauchen verbieten",
+                    "Weil es nicht vorgeschrieben ist",
+                    "Weil sie kein Taxi sind"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 121,
+                question: "Ist Eigenwerbung an Taxis erlaubt?",
+                options: [
+                    "Ja",
+                    "Nein, unzulässig",
+                    "Nur am Dach",
+                    "Nur innen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 122,
+                question: "Ist Fremdwerbung erlaubt?",
+                options: [
+                    "Nein",
+                    "Ja, an seitlichen Türen, keine politische oder religiöse Werbung",
+                    "Überall",
+                    "Nur hinten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 123,
+                question: "Welcher Verkehr unterliegt der Tarifpflicht?",
+                options: [
+                    "Mietwagenverkehr",
+                    "Taxiverkehr",
+                    "Beide",
+                    "Keiner"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 124,
+                question: "Wo gilt die Tarifpflicht?",
+                options: [
+                    "Überall",
+                    "Innerhalb des Pflichtfahrgebiets",
+                    "Nur an Taxiständen",
+                    "Nur bei Vorbestellung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 125,
+                question: "Nennen Sie Preiselemente des Fahrpreises.",
+                options: [
+                    "Nur Kilometerpreis",
+                    "Grundpreis, Anfahrt, Kilometerpreis, Zeitpreis, Zuschläge",
+                    "Nur Zeitpreis",
+                    "Nur Grundpreis"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 126,
+                question: "Wie oft müssen Fahrpreisanzeiger geeicht werden?",
+                options: [
+                    "Alle 2 Jahre",
+                    "1 Mal pro Jahr",
+                    "Alle 5 Jahre",
+                    "Nie"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 127,
+                question: "Muss sich der Mietwagenunternehmer an Tarife halten?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur innerorts",
+                    "Nur bei Vorbestellung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 128,
+                question: "Wofür dient der Wegstreckenzähler im Mietwagen?",
+                options: [
+                    "Nur zur Information",
+                    "Als Kontrollgerät für die Berechnung des Entgelts",
+                    "Für die Geschwindigkeitskontrolle",
+                    "Für die Routenplanung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 129,
+                question: "Kann ein Fahrzeug gleichzeitig als Taxi und Mietwagen eingesetzt werden?",
+                options: [
+                    "Nein",
+                    "Ja, in Orten unter 50.000 Einwohnern",
+                    "Nur mit Sondergenehmigung",
+                    "Nur außerhalb des Pflichtfahrbereichs"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 130,
+                question: "Was ist bei Doppelgenehmigung zu beachten?",
+                options: [
+                    "Nichts",
+                    "Bei Mietwageneinsatz dürfen Taximerkmale nicht gezeigt werden",
+                    "Immer Taxischild zeigen",
+                    "Immer beiden Vorschriften folgen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 131,
+                question: "Wie oft müssen Fahrzeuge zur Hauptuntersuchung?",
+                options: [
+                    "Alle 2 Jahre",
+                    "Nach 12 Monaten",
+                    "Alle 6 Monate",
+                    "Nur bei Neuanschaffung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 132,
+                question: "Welche Unterlage wird bei der Hauptuntersuchung erstellt?",
+                options: [
+                    "Keine",
+                    "Untersuchungsbericht",
+                    "TÜV-Plakette",
+                    "Bescheinigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 133,
+                question: "Was muss mit dem Untersuchungsbericht geschehen?",
+                options: [
+                    "Behalten",
+                    "Der Genehmigungsbehörde vorgelegt werden",
+                    "Weggeworfen werden",
+                    "Dem Fahrer gegeben werden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 134,
+                question: "Worauf ist bei der Hauptuntersuchung zu achten?",
+                options: [
+                    "Nur auf Bremsen",
+                    "Einhaltung der BOKraft-Vorschriften",
+                    "Nur auf Licht",
+                    "Nur auf Reifen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 135,
+                question: "Wann kann von einer Hauptuntersuchung abgesehen werden?",
+                options: [
+                    "Nie",
+                    "Bei fabrikneuen Fahrzeugen, nur Prüfung der BOKraft-Vorschriften",
+                    "Bei alten Fahrzeugen",
+                    "Bei Sondererlaubnis"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 136,
+                question: "Was ist eine außerordentliche Hauptuntersuchung?",
+                options: [
+                    "Eine regelmäßige Prüfung",
+                    "Vor dem ersten Einsatz eines Fahrzeugs im Unternehmen",
+                    "Nach jedem Unfall",
+                    "Bei Fahrzeugwechsel"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 137,
+                question: "Welche Aufgaben haben Taxizentralen?",
+                options: [
+                    "Nur Disposition",
+                    "Weiterleitung von Aufträgen, Einsatzplanung, Vorbestellungen",
+                    "Nur Abrechnung",
+                    "Nur Werbung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 138,
+                question: "Welche Rolle spielt eine Taxizentrale beim Vertragsabschluss?",
+                options: [
+                    "Sie ist Vertragspartner",
+                    "Sie vermittelt, Vertrag zwischen Unternehmer und Fahrgast",
+                    "Sie tritt als Beförderer auf",
+                    "Sie garantiert die Beförderung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 139,
+                question: "Welche Vorteile hat der Anschluss an eine Taxizentrale?",
+                options: [
+                    "Keine",
+                    "Verbesserung der Auslastung, größere Sicherheit",
+                    "Nur niedrigere Kosten",
+                    "Nur Werbung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 140,
+                question: "Welche technische Einrichtung wird für die Vermittlung eingesetzt?",
+                options: [
+                    "Nur Telefon",
+                    "Taxifunk, Autotelefon",
+                    "Nur Internet",
+                    "Nur SMS"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 141,
+                question: "Welche Vorteile hat der Funk?",
+                options: [
+                    "Nur Unterhaltung",
+                    "Schnelle Auftragsabwicklung, Sicherheit",
+                    "Nur Navigation",
+                    "Nur Kommunikation"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 142,
+                question: "Was ist Funkdisziplin?",
+                options: [
+                    "Lautes Sprechen",
+                    "Verhalten, das Störungen minimiert",
+                    "Immer sprechen",
+                    "Nur bei Bedarf sprechen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 143,
+                question: "Was ist für den Betrieb eines Funkgeräts erforderlich?",
+                options: [
+                    "Nichts",
+                    "Genehmigung des Fernmeldeamtes",
+                    "Nur Kauf",
+                    "Nur Anmeldung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 144,
+                question: "Wo muss die Funkfrequenz beantragt werden?",
+                options: [
+                    "Bei der Straßenverkehrsbehörde",
+                    "Bei der Regulierungsbehörde für Telekommunikation und Post",
+                    "Bei der IHK",
+                    "Beim Finanzamt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 145,
+                question: "Welche Voraussetzungen gelten für eine Funkgenehmigung?",
+                options: [
+                    "Keine",
+                    "Geräteprüfung, Bedürfnisnachweis, keine alternative Kommunikation, keine Gebührenrückstände",
+                    "Nur Alter",
+                    "Nur Fahrerlaubnis"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 146,
+                question: "Wie groß ist der Funkversorgungsbereich im Allgemeinen?",
+                options: [
+                    "5 km",
+                    "10 km, in Großstädten 15 km",
+                    "20 km",
+                    "50 km"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 147,
+                question: "Müssen Taxis mit einer Trennwand ausgerüstet sein?",
+                options: [
+                    "Immer",
+                    "Nein, können aber",
+                    "Nur bei Nachtschichten",
+                    "Nur in Großstädten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 148,
+                question: "Wer unterliegt der Gurtanlegepflicht?",
+                options: [
+                    "Nur Fahrer",
+                    "Jeder über 12 Jahre, auch Fahrer",
+                    "Nur Fahrgäste",
+                    "Nur vorne"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 149,
+                question: "Besteht Gurtpflicht auch bei Leerfahrten?",
+                options: [
+                    "Nein",
+                    "Ja",
+                    "Nur innerorts",
+                    "Nur auf Autobahnen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 150,
+                question: "Ist der Taxiunternehmer verpflichtet, den Betrieb durchzuführen?",
+                options: [
+                    "Nein",
+                    "Ja, ordnungsgemäße Einrichtung und Aufrechterhaltung",
+                    "Nur bei Gewinn",
+                    "Nur bei genügend Aufträgen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 151,
+                question: "Was passiert, wenn der Betrieb nicht aufgenommen wird?",
+                options: [
+                    "Nichts",
+                    "Die Behörde kann eine Frist setzen, danach erlischt die Genehmigung",
+                    "Sofortiger Widerruf",
+                    "Nur Geldstrafe"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 152,
+                question: "Wie kommt der Beförderungsvertrag zustande?",
+                options: [
+                    "Durch schriftlichen Vertrag",
+                    "Durch Angebot des Fahrgasts und Annahme durch Unternehmer oder Fahrer",
+                    "Nur bei Vorbestellung",
+                    "Nur an Taxiständen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 153,
+                question: "Welche Vertragspflichten haben Unternehmer und Fahrgast?",
+                options: [
+                    "Keine",
+                    "Unternehmer: Beförderung und Sicherheit; Fahrgast: ordnungsgemäßes Verhalten, Zahlung",
+                    "Nur Zahlungspflicht",
+                    "Nur Beförderungspflicht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 154,
+                question: "Hat der Taxiunternehmer Beförderungspflicht?",
+                options: [
+                    "Nein",
+                    "Ja, innerhalb des Pflichtfahrbereichs",
+                    "Nur bei Vorbestellung",
+                    "Nur an Taxiständen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 155,
+                question: "Kann der Taxiunternehmer Aufträge auch anderswo entgegennehmen?",
+                options: [
+                    "Nein",
+                    "Ja, überall, z. B. per Handzeichen, Telefon",
+                    "Nur an Taxiständen",
+                    "Nur am Betriebssitz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 156,
+                question: "Was passiert bei Verlegung des Betriebssitzes?",
+                options: [
+                    "Nichts",
+                    "Die Genehmigung erlischt, neue Genehmigung erforderlich",
+                    "Nur Anzeigepflicht",
+                    "Nur bei Wechsel des Bundeslandes"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 157,
+                question: "Wie erfolgt die Fahrgastaufnahme an Taxiständen?",
+                options: [
+                    "Nach Wartezeit",
+                    "In der Regel der Reihe nach, aber freie Wahl des Fahrgasts",
+                    "Nur nach Anmeldung",
+                    "Nur für Stammkunden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 158,
+                question: "Dürfen Taxis ohne Betriebsbereitschaft am Stand stehen?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur kurz",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 159,
+                question: "Dürfen andere am Taxistand halten?",
+                options: [
+                    "Ja",
+                    "Nein, Halteverbot",
+                    "Nur zum Ein- und Aussteigen",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 160,
+                question: "Wer bestimmt die Höhe der Beförderungsentgelte?",
+                options: [
+                    "Der Unternehmer",
+                    "Die Landesregierung oder Genehmigungsbehörde per Rechtsverordnung",
+                    "Die IHK",
+                    "Der Fahrer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 161,
+                question: "Darf der Unternehmer von den festgesetzten Entgelten abweichen?",
+                options: [
+                    "Immer",
+                    "Im Pflichtfahrbereich nicht, außerhalb frei vereinbar",
+                    "Nie",
+                    "Nur mit Zustimmung des Fahrgasts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 162,
+                question: "Für welchen Bereich gelten Tarifordnungen?",
+                options: [
+                    "Für das gesamte Bundesland",
+                    "Für den von der Behörde festgesetzten Bezirk",
+                    "Für ganz Deutschland",
+                    "Nur für die Gemeinde"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 163,
+                question: "Was kann die Tarifverordnung regeln?",
+                options: [
+                    "Nur Grundpreis",
+                    "Grundpreise, Kilometerpreise, Zeitpreise, Zuschläge, Vorauszahlungen, Abrechnung, Zahlungsweise, Sondervereinbarungen",
+                    "Nur Zahlungsfristen",
+                    "Nur Stornobedingungen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 164,
+                question: "Wann sind Sondervereinbarungen im Pflichtfahrbereich zulässig?",
+                options: [
+                    "Nie",
+                    "Bei Festlegung von Zeitraum, Mindestfahrten oder -umsatz, schriftlicher Vereinbarung, Genehmigung oder Anzeige",
+                    "Immer",
+                    "Nur für Firmenkunden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 165,
+                question: "Muss der Taxiunternehmer die Tarifvorschriften mitführen?",
+                options: [
+                    "Nein",
+                    "Ja, und auf Verlangen vorzeigen",
+                    "Nur bei Kontrollen",
+                    "Nur in der Zentrale"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 166,
+                question: "Darf von der vorgeschriebenen Anfahrtsberechnung abgewichen werden?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur bei Stau",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 167,
+                question: "Wie muss das zu zahlende Entgelt kenntlich gemacht werden?",
+                options: [
+                    "Mündlich",
+                    "Durch beleuchtbaren Fahrpreisanzeiger",
+                    "Nur auf Rechnung",
+                    "Nur bei Fahrtende"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 168,
+                question: "Was muss der Fahrpreisanzeiger anzeigen?",
+                options: [
+                    "Nur Gesamtbetrag",
+                    "Beförderungsentgelt, getrennt nach Fahrpreis und Zuschlägen, Tarifstufe",
+                    "Nur Kilometer",
+                    "Nur Zeit"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 169,
+                question: "Darf ein anderer Betrag als angezeigt verlangt werden?",
+                options: [
+                    "Ja",
+                    "Nein, gesetzlich verboten",
+                    "Nur bei Trinkgeld",
+                    "Nur bei besonderen Umständen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 170,
+                question: "Wie verhält man sich bei Versagen des Fahrpreisanzeigers?",
+                options: [
+                    "Fahrt verweigern",
+                    "Entgelt nach Strecke berechnen, Fahrgast informieren, Fehler beheben",
+                    "Pauschal berechnen",
+                    "Nur schätzen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 171,
+                question: "Was ist bei Fahrten außerhalb des Pflichtfahrbereichs zu beachten?",
+                options: [
+                    "Nichts",
+                    "Fahrgast vor Fahrtbeginn auf freie Vereinbarung hinweisen",
+                    "Immer Taxitarif anwenden",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 172,
+                question: "Darf ein Taxifahrer Radio hören?",
+                options: [
+                    "Nein",
+                    "Ja",
+                    "Nur leise",
+                    "Nur mit Zustimmung des Fahrgasts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 173,
+                question: "Darf sich der Taxifahrer mit Fahrgästen unterhalten?",
+                options: [
+                    "Nein",
+                    "Ja",
+                    "Nur über Verkehr",
+                    "Nur bei langen Fahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 174,
+                question: "Darf ein Taxi an Selbstfahrer vermietet werden?",
+                options: [
+                    "Ja",
+                    "Nein, verboten",
+                    "Nur mit Genehmigung",
+                    "Nur für gewerbliche Zwecke"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 175,
+                question: "Welchen Untersuchungen unterliegen Taxi- und Mietwagen?",
+                options: [
+                    "Keinen",
+                    "Hauptuntersuchung, Abgasuntersuchung",
+                    "Nur TÜV",
+                    "Nur bei Neuanschaffung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 176,
+                question: "Wer ist für den ordnungsgemäßen Betrieb verantwortlich?",
+                options: [
+                    "Nur Fahrer",
+                    "Halter und Fahrzeugführer",
+                    "Nur Unternehmer",
+                    "Nur Werkstatt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 177,
+                question: "Was muss der Unternehmer vom Fahrer vorlegen lassen?",
+                options: [
+                    "Nur Führerschein",
+                    "Führerschein Klasse 3 und zur Fahrgastbeförderung",
+                    "Nur Personalausweis",
+                    "Nur Sozialversicherungsausweis"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 178,
+                question: "Wer ist für die Einhaltung der Rechtsvorschriften verantwortlich?",
+                options: [
+                    "Fahrer",
+                    "Unternehmer",
+                    "Behörde",
+                    "Versicherung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 179,
+                question: "Was hat der Unternehmer beim Personaleinsatz zu beachten?",
+                options: [
+                    "Nichts",
+                    "Dass der Fahrer alle erforderlichen Dokumente hat",
+                    "Nur Arbeitszeiten",
+                    "Nur Gehalt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 180,
+                question: "Was gilt für die Kennzeichnung von Mietwagen?",
+                options: [
+                    "Wie Taxis",
+                    "Dürfen keine Taxizeichen führen",
+                    "Müssen besonders gekennzeichnet sein",
+                    "Keine Vorschriften"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 181,
+                question: "Warum dürfen Mietwagen keine Taxikennzeichnung verwenden?",
+                options: [
+                    "Wegen Steuern",
+                    "Um Verwechslung zu vermeiden",
+                    "Weil es teurer ist",
+                    "Weil es nicht erlaubt ist"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 182,
+                question: "Wann ist der Einsatz von Funkgeräten im Mietwagen erlaubt?",
+                options: [
+                    "Nie",
+                    "Bei Rückkehr oder Bereitschaft",
+                    "Immer",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 183,
+                question: "Dürfen auf dem Rücksitz 4 Personen befördert werden, wenn nur 3 Gurte vorhanden sind?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur bei Kindern",
+                    "Nur innerorts"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 184,
+                question: "Wo können Einzelheiten des Dienstbetriebs geregelt sein?",
+                options: [
+                    "Nirgends",
+                    "In der Taxiordnung",
+                    "Im Arbeitsvertrag",
+                    "Bei der IHK"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 185,
+                question: "Was gilt für das Bereithalten von Mietwagen?",
+                options: [
+                    "Immer erlaubt",
+                    "Verwechslung mit Taxiverkehr ist verboten",
+                    "Nur am Betriebssitz",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 186,
+                question: "Wie kann der Fahrzeugeinsatz wirtschaftlicher gestaltet werden?",
+                options: [
+                    "Durch schnelleres Fahren",
+                    "Durch Absprachen über Dienstbereitschaft und Einsatzpläne",
+                    "Durch weniger Wartung",
+                    "Durch höhere Preise"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 187,
+                question: "Welche Vorschriften gelten für grenzüberschreitende Beförderung?",
+                options: [
+                    "Keine",
+                    "PBefG, internationale Abkommen, ausländische Vorschriften",
+                    "Nur deutsche Vorschriften",
+                    "Nur Zollvorschriften"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 188,
+                question: "Braucht man für Auslandsfahrten eine besondere Genehmigung?",
+                options: [
+                    "Immer",
+                    "Nein, deutsche Genehmigung genügt, außer in Abkommen geregelt",
+                    "Nur für bestimmte Länder",
+                    "Nur bei gewerblicher Beförderung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 189,
+                question: "Dürfen im Ausland ausländische Fahrgäste aufgenommen werden?",
+                options: [
+                    "Immer",
+                    "Nein, nur mit besonderer Genehmigung",
+                    "Ja, wenn Platz ist",
+                    "Nur für Rückfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 190,
+                question: "Dürfen Taxis im Ausland an Bahnhöfen warten?",
+                options: [
+                    "Ja",
+                    "Nein, Bereithalten nur in der Betriebssitzgemeinde erlaubt",
+                    "Nur mit Genehmigung",
+                    "Nur kurz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 191,
+                question: "Dürfen Taxis im Ausland Fahrgäste abholen?",
+                options: [
+                    "Nein",
+                    "Ja, auf Vorbestellung",
+                    "Nur mit Sondergenehmigung",
+                    "Nur an Flughäfen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 192,
+                question: "Was ist mit Taxischild und Funkgerät im Ausland zu beachten?",
+                options: [
+                    "Nichts",
+                    "Funk abschalten, Taxischild abdecken oder entfernen",
+                    "Immer nutzen",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 193,
+                question: "Welche Papiere sind bei Auslandsfahrten mitzuführen?",
+                options: [
+                    "Nur Führerschein",
+                    "Reisepass, Führerschein, Fahrgastbeförderungserlaubnis, Fahrzeugschein, AU, Genehmigung, grüne Versicherungskarte, Visum, Funkgenehmigung, Sozialversicherungsausweis, ggf. Tarifordnung",
+                    "Nur Fahrzeugbrief",
+                    "Nur Versicherungskarte"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 194,
+                question: "Was ist bei Funkgeräten im Ausland zu beachten?",
+                options: [
+                    "Immer benutzen",
+                    "Abschalten oder ausbauen, wenn keine Extragenehmigung",
+                    "Nur leise stellen",
+                    "Nur im Notfall nutzen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 195,
+                question: "Mit welchen zusätzlichen Kosten muss bei Auslandsbeförderung gerechnet werden?",
+                options: [
+                    "Keinen",
+                    "Maut, Steuern, Zölle, Übernachtung, erhöhte Lohnkosten",
+                    "Nur Sprit",
+                    "Nur Versicherung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 196,
+                question: "Unter welchen Bedingungen dürfen Haustiere ins Ausland mitgenommen werden?",
+                options: [
+                    "Immer",
+                    "Mit gültigen Impfpapieren, ggf. Leine oder Beißkorb",
+                    "Nur kleine Tiere",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 197,
+                question: "Können Grenzbeamten Fahrzeuge zurückweisen?",
+                options: [
+                    "Nein",
+                    "Ja, bei fehlenden Papieren",
+                    "Nur bei verdächtigem Verhalten",
+                    "Nur bei Überladung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 198,
+                question: "Was ist bei Taxifahrten ins Ausland zu beachten?",
+                options: [
+                    "Nichts",
+                    "Taxischild entfernen/abdecken, Funkverbot, D-Schild, Verkehrs- und Zollbestimmungen, Umsatzsteuerfreiheit in Drittländern",
+                    "Immer Taxitarif anwenden",
+                    "Nur mit Begleitung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 199,
+                question: "Was ist bei Unfällen im Ausland zu tun?",
+                options: [
+                    "Nichts",
+                    "Polizei hinzuziehen, grüne Versicherungskarte vorweisen",
+                    "Sofort weiterfahren",
+                    "Nur melden, wenn schwer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 200,
+                question: "Gibt es im Ausland Beförderungspflicht und Meldepflicht nach Unfällen?",
+                options: [
+                    "Nein",
+                    "Ja, Ersatzfahrzeug anbieten oder Auftrag stornieren, Unfall melden",
+                    "Nur Meldepflicht",
+                    "Nur bei Personenschaden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            // Fortsetzung für Fragen 201-300
+            {
+                id: 201,
+                question: "Wie ist die Haftung bei Schäden im Ausland?",
+                options: [
+                    "Keine",
+                    "Unternehmer haftet für Vertragserfüllung",
+                    "Nur bei Verschulden",
+                    "Nur bis zu einem Limit"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 202,
+                question: "Darf ein Kontrollbeamter das fehlende D-Schild beanstanden?",
+                options: [
+                    "Ja",
+                    "Nein, wenn Kennzeichen Nationalitätszeichen enthält",
+                    "Immer",
+                    "Nur außerhalb der EU"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 203,
+                question: "Was muss bei altem Kennzeichen ohne Nationalitätszeichen getan werden?",
+                options: [
+                    "Nichts",
+                    "Neues Kennzeichen mit Nationalitätszeichen oder D-Schild am Heck anbringen",
+                    "Nur Aufkleber",
+                    "Nur bei Kontrolle erklären"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 204,
+                question: "Dürfen Mietwagen im Ausland winkende Fahrgäste aufnehmen?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Auftrag",
+                    "Nur bei Tag"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 205,
+                question: "Dürfen Mietwagen kurz nach Grenzübertritt winkende Fahrgäste aufnehmen?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur mit Auftrag",
+                    "Nur bei Tag"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 206,
+                question: "Wie wird die Umsatzsteuer bei grenzüberschreitenden Fahrten berechnet?",
+                options: [
+                    "Immer deutscher Satz",
+                    "Inlandsstrecke deutscher Satz, Auslandsstrecke nationales Recht",
+                    "Immer ausländischer Satz",
+                    "Gar keine"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 207,
+                question: "Wie wird der inländische Teil berechnet?",
+                options: [
+                    "Pauschal",
+                    "Gesamtpreis × inländische km / Gesamt-km",
+                    "Immer 50 %",
+                    "Nach Zeit"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 208,
+                question: "Welche Gesetze bestimmen die Buchführungspflicht?",
+                options: [
+                    "Keine",
+                    "HGB, EStG, AO, GmbHG, AktG",
+                    "Nur BGB",
+                    "Nur StGB"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 209,
+                question: "Welche Unternehmer unterliegen der handelsüblichen Buchführungspflicht?",
+                options: [
+                    "Alle",
+                    "Die im Handelsregister eingetragen sind",
+                    "Nur Kapitalgesellschaften",
+                    "Nur bei hohem Umsatz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 210,
+                question: "Wann besteht steuerrechtlich Buchführungspflicht?",
+                options: [
+                    "Immer",
+                    "Bei Umsatz > 350.000 €, Betriebsvermögen > 87.500 €, Gewinn > 30.000 €",
+                    "Nur bei GmbH",
+                    "Nur bei freiwilliger Anmeldung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 211,
+                question: "Was muss ein Kleinunternehmer führen?",
+                options: [
+                    "Nichts",
+                    "Lohnkonten, MwSt-Aufzeichnungen, Kassenbuch, Einnahmen-Ausgaben-Rechnung",
+                    "Nur Kassenbuch",
+                    "Nur Belege"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 212,
+                question: "Wie muss eine ordentliche Buchführung aussehen?",
+                options: [
+                    "Beliebig",
+                    "Soll und Haben, vollständig, richtig, zeitgerecht, geordnet",
+                    "Nur handschriftlich",
+                    "Nur digital"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 213,
+                question: "In welchem Gesetz ist die steuerliche Buchführungspflicht geregelt?",
+                options: [
+                    "HGB",
+                    "Abgabenordnung",
+                    "BGB",
+                    "StGB"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 214,
+                question: "Wie lange müssen Schriftverkehr und Bilanzen aufbewahrt werden?",
+                options: [
+                    "1 Jahr",
+                    "Schriftverkehr 6 Jahre, Bilanzen 10 Jahre",
+                    "Immer",
+                    "3 Jahre"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 215,
+                question: "Wann beginnen die Aufbewahrungsfristen?",
+                options: [
+                    "Sofort",
+                    "Mit Ende des Kalenderjahres der Entstehung",
+                    "Mit Erstellung",
+                    "Mit Prüfung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 216,
+                question: "Welche Bücher sollte ein Unternehmer führen?",
+                options: [
+                    "Keine",
+                    "Kassenbuch, Journal, Inventarverzeichnis",
+                    "Nur Kassenbuch",
+                    "Nur Journal"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 217,
+                question: "Was muss aus den Aufzeichnungen hervorgehen?",
+                options: [
+                    "Nichts",
+                    "Entgelte, Bemessungsgrundlagen, Betriebsausgaben",
+                    "Nur Einnahmen",
+                    "Nur Ausgaben"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 218,
+                question: "Was passiert, wenn nur Umsätze aufgezeichnet wurden?",
+                options: [
+                    "Nichts",
+                    "Finanzamt schätzt den Gewinn",
+                    "Strafe",
+                    "Keine Steuer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 219,
+                question: "Wann ist eine Buchführung ordnungsgemäß?",
+                options: [
+                    "Wenn sie existiert",
+                    "Wenn Geschäftsvorfälle vollständig und laufend aufgezeichnet sind",
+                    "Wenn sie unterschrieben ist",
+                    "Wenn sie gedruckt ist"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 220,
+                question: "Welche Eigenschaften muss eine ordnungsgemäße Buchführung haben?",
+                options: [
+                    "Keine",
+                    "Lebende Sprache, eindeutige Abkürzungen, Nachvollziehbarkeit, Vollständigkeit, Richtigkeit, Zeitgerechtigkeit, Ordnung, tägliche Kassenaufzeichnung, Belegprinzip, keine unleserlichen Veränderungen, Kopien von Handelsbriefen",
+                    "Nur digital",
+                    "Nur von Steuerberater erstellt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 221,
+                question: "Wie nimmt man eine Inventur der Kasse vor?",
+                options: [
+                    "Gar nicht",
+                    "Kassenbestand zählen und mit Buchung vergleichen",
+                    "Nur schätzen",
+                    "Nur am Jahresende"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 222,
+                question: "Was ist die Bilanz?",
+                options: [
+                    "Gewinnberechnung",
+                    "Gegenüberstellung von Vermögen und Schulden",
+                    "Nur Aktivseite",
+                    "Nur Passivseite"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 223,
+                question: "Was ermittelt die Gewinn-und-Verlust-Rechnung?",
+                options: [
+                    "Nur Umsatz",
+                    "Gewinn oder Verlust",
+                    "Nur Kosten",
+                    "Nur Steuern"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 224,
+                question: "Was ist Eigenkapital?",
+                options: [
+                    "Fremdkapital",
+                    "Vom Unternehmer eingebrachtes Geld, beeinflusst durch Entnahmen, Einlagen, Gewinn/Verlust",
+                    "Nur Bankguthaben",
+                    "Nur Anlagevermögen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 225,
+                question: "Was sind geringwertige Wirtschaftsgüter?",
+                options: [
+                    "Alles unter 1.000 €",
+                    "Güter bis 800 € netto",
+                    "Nur unter 250 €",
+                    "Nur Verbrauchsgüter"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 226,
+                question: "Welche Besonderheit gilt für deren Abschreibung?",
+                options: [
+                    "Nie abschreiben",
+                    "Im Anschaffungsjahr voll abschreibbar",
+                    "Über 10 Jahre",
+                    "Nur bei Gewinn"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 227,
+                question: "Was ist der Unterschied zwischen linearer und degressiver Abschreibung?",
+                options: [
+                    "Keiner",
+                    "Linear gleichbleibend, degressiv abnehmend",
+                    "Linear abnehmend, degressiv gleichbleibend",
+                    "Nur degressiv erlaubt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 228,
+                question: "Wie hoch ist der ermäßigte Umsatzsteuersatz für Taxifahrten?",
+                options: [
+                    "19 %",
+                    "7 % innerhalb der Gemeinde bis 50 km",
+                    "10 %",
+                    "5 %"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 229,
+                question: "Was ist Skonto?",
+                options: [
+                    "Steuer",
+                    "Rabatt für schnelle Zahlung",
+                    "Strafzahlung",
+                    "Versicherung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 230,
+                question: "Was ist das Zahlungsziel?",
+                options: [
+                    "Der Tag der Rechnungserstellung",
+                    "Vereinbarter Zeitpunkt der Zahlung",
+                    "Der letzte Tag des Monats",
+                    "Immer 30 Tage"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 231,
+                question: "Wie kann man Kapital erweitern?",
+                options: [
+                    "Nur durch Gewinn",
+                    "Durch Kredite, Darlehen, Fremdkapital",
+                    "Nur durch Eigenmittel",
+                    "Nur durch Spenden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 232,
+                question: "Nennen Sie Kreditsicherungen.",
+                options: [
+                    "Keine",
+                    "Wertpapiere, Fahrzeuge, Grundschuld, Abtretung, Bürgschaft",
+                    "Nur Bürgschaft",
+                    "Nur Grundschuld"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 233,
+                question: "Was ist der Unterschied zwischen Sicherungsübereignung und Eigentumsvorbehalt?",
+                options: [
+                    "Keiner",
+                    "Sicherungsübereignung: Eigentum übertragen, Besitz bleibt; Eigentumsvorbehalt: Verkäufer bleibt Eigentümer bis Zahlung",
+                    "Beides gleich",
+                    "Nur Eigentumsvorbehalt erlaubt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 234,
+                question: "Beeinflusst die Umsatzsteuer den Gewinn?",
+                options: [
+                    "Ja",
+                    "Nein, durchlaufender Posten",
+                    "Nur bei Kleinunternehmern",
+                    "Nur bei Kapitalgesellschaften"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 235,
+                question: "Nennen Sie Personen- und Kapitalgesellschaften.",
+                options: [
+                    "Nur GmbH",
+                    "KG, OHG, GmbH, AG",
+                    "Nur Einzelunternehmen",
+                    "Nur GbR"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 236,
+                question: "Was ist der Hauptunterschied zwischen Personen- und Kapitalgesellschaften?",
+                options: [
+                    "Keiner",
+                    "Personengesellschaften: unbeschränkte Haftung; Kapitalgesellschaften: Haftung beschränkt auf Kapital",
+                    "Nur Steuerunterschied",
+                    "Nur Größenunterschied"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 237,
+                question: "Wer ist Kaufmann?",
+                options: [
+                    "Jeder Unternehmer",
+                    "Wer im Handelsregister eingetragen ist",
+                    "Nur mit Umsatz über 250.000 €",
+                    "Nur mit Gewerbeschein"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 238,
+                question: "Was bedeutet GmbH und wie hoch ist das Stammkapital?",
+                options: [
+                    "Gesellschaft mit beschränkter Haftung, 50.000 €",
+                    "Gesellschaft mit beschränkter Haftung, 25.000 €",
+                    "Gewerbliche mit beschränkter Haftung, 10.000 €",
+                    "Gemeinschaft mit beschränkter Haftung, 100.000 €"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 239,
+                question: "Wie hoch ist das Grundkapital einer AG?",
+                options: [
+                    "25.000 €",
+                    "50.000 €",
+                    "100.000 €",
+                    "1.000 €"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 240,
+                question: "Nennen Sie ein bargeldloses Zahlungsmittel.",
+                options: [
+                    "Nur Bar",
+                    "Scheck",
+                    "Trinkgeld",
+                    "Kreditkarte"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 241,
+                question: "Was kann bei nicht bezahlter Rechnung unternommen werden?",
+                options: [
+                    "Nichts",
+                    "Mahnbescheid, Zwangsvollstreckung, Pfändung",
+                    "Nur warten",
+                    "Nur Strafanzeige"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 242,
+                question: "Nennen Sie Anlagevermögen.",
+                options: [
+                    "Kasse",
+                    "Fahrzeuge, Gebäude, Betriebsausstattung, Grundstücke",
+                    "Nur Bankguthaben",
+                    "Nur Vorräte"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 243,
+                question: "Nennen Sie Umlaufvermögen.",
+                options: [
+                    "Gebäude",
+                    "Kasse, Bank, Vorräte, Forderungen",
+                    "Nur Maschinen",
+                    "Nur Fuhrpark"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 244,
+                question: "Was ist Liquidität?",
+                options: [
+                    "Gewinn",
+                    "Fähigkeit, Zahlungsverpflichtungen fristgerecht nachzukommen",
+                    "Nur Bargeld",
+                    "Nur Kreditwürdigkeit"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 245,
+                question: "Welche Aufzeichnungen bei Personalbeschäftigung?",
+                options: [
+                    "Keine",
+                    "Lohnkonten",
+                    "Nur Gehaltsabrechnung",
+                    "Nur Sozialversicherungsmeldung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 246,
+                question: "Was ist ein Gewerbe?",
+                options: [
+                    "Hobby",
+                    "Selbständige, planmäßige, gewinnerzielende Tätigkeit",
+                    "Nur Handel",
+                    "Nur Produktion"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 247,
+                question: "Was ist eine Firma?",
+                options: [
+                    "Der Ort",
+                    "Der Name, unter dem der Kaufmann sein Geschäft betreibt",
+                    "Nur Rechtsform",
+                    "Nur Marke"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 248,
+                question: "Was ist bei Gründung einer Firma zu tun?",
+                options: [
+                    "Nichts",
+                    "Gewerbeanmeldung, Erlaubnis beantragen, Handelsregistereintrag",
+                    "Nur Steueranmeldung",
+                    "Nur Bankkonto eröffnen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 249,
+                question: "Under welchen Voraussetzungen wird die Firma ins Handelsregister eingetragen?",
+                options: [
+                    "Immer",
+                    "Bei Eignung, Unterscheidungskraft, Offenlegung der Verhältnisse, keine Täuschung",
+                    "Nur bei hohem Umsatz",
+                    "Nur bei Kapitalgesellschaften"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 250,
+                question: "Nennen Sie Rechtsformen mit Abkürzungen.",
+                options: [
+                    "Nur GmbH",
+                    "e.K., OHG, KG, GmbH, AG, e.G.",
+                    "Nur Einzelunternehmer",
+                    "Nur GbR"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 251,
+                question: "Was ist kaufmännische Buchführung?",
+                options: [
+                    "Nur Kassenbuch",
+                    "Führung von Handelsbüchern, Inventaren, Bilanzen nach GoB",
+                    "Nur Einnahmen-Ausgaben-Rechnung",
+                    "Nur für Großunternehmen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 252,
+                question: "Welche Unterlagen muss ein Kaufmann aufbewahren?",
+                options: [
+                    "Keine",
+                    "Handelsbücher, Inventare, Bilanzen, Handelsbriefe, Buchungsbelege",
+                    "Nur Rechnungen",
+                    "Nur Bankauszüge"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 253,
+                question: "Wie kann das Privatvermögen geschützt werden?",
+                options: [
+                    "Nicht möglich",
+                    "Durch Gründung einer Kapitalgesellschaft",
+                    "Nur durch Versicherung",
+                    "Nur durch Testament"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 254,
+                question: "Wie werden Personengesellschaften besteuert?",
+                options: [
+                    "Gar nicht",
+                    "Gewinn wird auf Gesellschafter verteilt und dort versteuert",
+                    "Nur Körperschaftsteuer",
+                    "Nur Gewerbesteuer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 255,
+                question: "Welche Steuer zahlen Kapitalgesellschaften?",
+                options: [
+                    "Nur Einkommensteuer",
+                    "Körperschaftsteuer",
+                    "Nur Umsatzsteuer",
+                    "Nur Gewerbesteuer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 256,
+                question: "Was ist der Hauptvorteil einer Kapitalgesellschaft?",
+                options: [
+                    "Niedrigere Steuern",
+                    "Beschränkte Haftung",
+                    "Einfache Gründung",
+                    "Weniger Bürokratie"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 257,
+                question: "Was sind Hauptmerkmale einer GmbH & Co. KG?",
+                options: [
+                    "Unbeschränkte Haftung",
+                    "Haftung beschränkt auf Kapital, keine Körperschaftsteuer",
+                    "Nur für kleine Betriebe",
+                    "Nur für Familien"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 258,
+                question: "Welche Risiken hat ein Taxiunternehmer?",
+                options: [
+                    "Keine",
+                    "Hohe finanzielle, persönliche, strafrechtliche Risiken, Kapitalintensität, Konjunktur, gesetzliche Beschränkungen",
+                    "Nur Wettbewerb",
+                    "Nur Steuern"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 259,
+                question: "Welche wettbewerbsrechtlichen Vorschriften gibt es?",
+                options: [
+                    "Keine",
+                    "UWG, GWB",
+                    "Nur HGB",
+                    "Nur BGB"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 260,
+                question: "Was bezweckt das UWG?",
+                options: [
+                    "Steuererhöhung",
+                    "Schutz der guten Sitten im geschäftlichen Verkehr",
+                    "Nur Verbraucherschutz",
+                    "Nur Kartellrecht"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 261,
+                question: "Was ist ein Verstoß gegen das UWG im Taxigewerbe?",
+                options: [
+                    "Zu hohe Preise",
+                    "Kassieren eines geringeren Entgelts als tariflich vorgesehen",
+                    "Zu langsames Fahren",
+                    "Zu viele Fahrzeuge"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 262,
+                question: "Welche Ansprüche bei UWG-Verstoß?",
+                options: [
+                    "Keine",
+                    "Unterlassung und Schadensersatz",
+                    "Nur Strafe",
+                    "Nur Verwarnung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 263,
+                question: "Wie lange beträgt die regelmäßige Verjährungsfrist?",
+                options: [
+                    "3 Jahre",
+                    "10 Jahre",
+                    "5 Jahre",
+                    "30 Jahre"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 264,
+                question: "Wie haftet der Unternehmer für Schäden an Fahrgästen?",
+                options: [
+                    "Gar nicht",
+                    "Aus Beförderungsvertrag, unerlaubter Handlung, Gefährdungshaftung",
+                    "Nur bei Vorsatz",
+                    "Nur bis 1.000 €"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 265,
+                question: "Wie haftet der Unternehmer aus Gefährdungshaftung?",
+                options: [
+                    "Immer",
+                    "Nur wenn Schaden beim Betrieb des Kfz entsteht, außer bei unabwendbarem Ereignis",
+                    "Nur bei Verschulden",
+                    "Nur bei Personenschaden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 266,
+                question: "Kann die Haftung für Sachschäden begrenzt werden?",
+                options: [
+                    "Nein",
+                    "Ja, auf 1.000 € pro Person",
+                    "Nur auf 500 €",
+                    "Nur bei Vereinbarung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 267,
+                question: "Gilt die Haftungsbeschränkung auch bei grober Fahrlässigkeit?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur bei leichter Fahrlässigkeit",
+                    "Nur bei Vorsatz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 268,
+                question: "Kann die Haftung für Personenschäden beschränkt werden?",
+                options: [
+                    "Ja",
+                    "Nein",
+                    "Nur bei Vereinbarung",
+                    "Nur bei Auslandsfahrten"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 269,
+                question: "Haftet der Unternehmer für Schäden Dritter?",
+                options: [
+                    "Nein",
+                    "Ja, aus Gefährdungshaftung und unerlaubter Handlung",
+                    "Nur bei Verschulden",
+                    "Nur bis 2.500 €"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 270,
+                question: "Muss man sich dagegen versichern?",
+                options: [
+                    "Nein",
+                    "Ja, Pflichtversicherungsgesetz",
+                    "Nur freiwillig",
+                    "Nur für Personenschäden"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 271,
+                question: "Wie haftet der Unternehmer für Schäden des Fahrers?",
+                options: [
+                    "Gar nicht",
+                    "Wie selbst verursacht",
+                    "Nur bei grober Fahrlässigkeit",
+                    "Nur bis zum Gehalt"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 272,
+                question: "Welche Zahlungsweisen gibt es?",
+                options: [
+                    "Nur bar",
+                    "Bar, Scheck, Überweisung, Lastschrift, Kreditkarte, Aufrechnung",
+                    "Nur Vorkasse",
+                    "Nur Nachnahme"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 273,
+                question: "Was ist eine Nachnahme?",
+                options: [
+                    "Spätere Zahlung",
+                    "Lieferung gegen vorherige Bezahlung durch Empfänger",
+                    "Teilzahlung",
+                    "Skonto"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 274,
+                question: "Was ist ein Scheck?",
+                options: [
+                    "Schuldschein",
+                    "Schriftliche Zahlungsanweisung an die Bank",
+                    "Vertrag",
+                    "Quittung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 275,
+                question: "Welcher Scheck gilt als besonders sicher?",
+                options: [
+                    "Barscheck",
+                    "Verrechnungsscheck",
+                    "Orderscheck",
+                    "Blankoscheck"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 276,
+                question: "Was ist ein Wechsel?",
+                options: [
+                    "Zahlungsmittel",
+                    "Zahlungsversprechen",
+                    "Schuldanerkenntnis",
+                    "Kreditvertrag"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 277,
+                question: "Was ist der Unterschied zwischen Scheck und Wechsel?",
+                options: [
+                    "Keiner",
+                    "Scheck Zahlungsmittel, Wechsel Zahlungsversprechen",
+                    "Scheck länger gültig",
+                    "Wechsel nur für Unternehmen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 278,
+                question: "Wer darf einen Wechsel ausstellen?",
+                options: [
+                    "Nur Volljährige",
+                    "Geschäftsfähige, mit Zustimmung des Vertreters bei Minderjährigen",
+                    "Nur Unternehmen",
+                    "Nur mit Genehmigung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 279,
+                question: "Wann ist man aus einem Wechsel verpflichtet?",
+                options: [
+                    "Nie",
+                    "Bei Unterschrift",
+                    "Nur bei Einlösung",
+                    "Nur bei Verfall"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 280,
+                question: "Wozu dient ein Wechsel hauptsächlich?",
+                options: [
+                    "Zahlung",
+                    "Kreditsicherung",
+                    "Steuerersparnis",
+                    "Buchung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 281,
+                question: "Warum werden Kredite durch Wechsel gesichert?",
+                options: [
+                    "Wegen Zinsen",
+                    "Schnelle gerichtliche Durchsetzung",
+                    "Steuervorteile",
+                    "Einfache Handhabung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 282,
+                question: "Was ist ein Kredit?",
+                options: [
+                    "Geschenk",
+                    "Darlehen oder Zahlungsaufschub",
+                    "Nur Barkredit",
+                    "Nur Überziehung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 283,
+                question: "Wann spricht man von Kreditwürdigkeit?",
+                options: [
+                    "Bei hohem Alter",
+                    "Bei Vertrauen in die Zahlungsfähigkeit",
+                    "Bei Eigentum",
+                    "Bei Bürgschaft"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 284,
+                question: "Wann ist Kreditwürdigkeit wichtig?",
+                options: [
+                    "Immer",
+                    "Bei Fahrzeugfinanzierung",
+                    "Nur bei Immobilien",
+                    "Nur bei hohen Beträgen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 285,
+                question: "Wie kann man Mittel für Neuanschaffungen besorgen?",
+                options: [
+                    "Nur durch Gewinn",
+                    "Durch Sicherungsübereignung des Fahrzeugs",
+                    "Nur durch Sparen",
+                    "Nur durch Leasing"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 286,
+                question: "Worauf muss man bei Ratenkäufen achten?",
+                options: [
+                    "Nur auf Rate",
+                    "Auf Zinsen, Nebenkosten, Disagio",
+                    "Nur auf Laufzeit",
+                    "Nur auf monatliche Belastung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 287,
+                question: "Was ist ein Personalkredit?",
+                options: [
+                    "Gesicherter Kredit",
+                    "Ungesicherter Kredit, basierend auf Vertrauen",
+                    "Nur für Personen",
+                    "Nur mit Bürgen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 288,
+                question: "Welche Kreditarten gibt es nach Dauer?",
+                options: [
+                    "Nur kurzfristig",
+                    "Kurzfristig (Kontokorrent, Wechsel), langfristig (Hypothek, Anleihe)",
+                    "Nur langfristig",
+                    "Nur mittelfristig"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 289,
+                question: "Wie kann der Unternehmer Forderungen durchsetzen?",
+                options: [
+                    "Durch Warten",
+                    "Durch Mahnbescheid",
+                    "Durch Strafanzeige",
+                    "Durch Pfändung"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 290,
+                question: "Was ist bei Erhalt eines Mahnbescheids zu tun?",
+                options: [
+                    "Nichts",
+                    "Innerhalb von 2 Wochen Widerspruch einlegen",
+                    "Sofort zahlen",
+                    "Ignorieren"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 291,
+                question: "Wie ist der Geldverkehr zu buchen?",
+                options: [
+                    "Gar nicht",
+                    "Täglich, lückenlos im Kassenbuch",
+                    "Nur monatlich",
+                    "Nur bei hohen Beträgen"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 292,
+                question: "Wie stimmt man Kasse ab?",
+                options: [
+                    "Gar nicht",
+                    "Einnahmen und Ausgaben addieren, Saldo bilden",
+                    "Nur schätzen",
+                    "Nur am Jahresende"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 293,
+                question: "Worauf kommt es bei der Kassenführung an?",
+                options: [
+                    "Auf Schnelligkeit",
+                    "Auf Richtigkeit",
+                    "Auf Menge",
+                    "Auf Ort"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 294,
+                question: "Wann ist Kassenführung erfüllt?",
+                options: [
+                    "Immer",
+                    "Wenn keine Überausgaben bei Prüfung feststellbar sind",
+                    "Wenn unterschrieben",
+                    "Wenn digital"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 295,
+                question: "Wie schließt man ein Kassenbuch ab?",
+                options: [
+                    "Gar nicht",
+                    "Gesamteinnahmen und -ausgaben feststellen, ausgleichen",
+                    "Nur zählen",
+                    "Nur Belege sammeln"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 296,
+                question: "Wodurch erhält man ein Bild der wirtschaftlichen Lage?",
+                options: [
+                    "Durch Bauchgefühl",
+                    "Durch Bilanz und GuV",
+                    "Nur durch Kassenbestand",
+                    "Nur durch Umsatz"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 297,
+                question: "Was ist ein Privatkonto?",
+                options: [
+                    "Geschäftskonto",
+                    "Unterkonto des Kapitalkontos für private Entnahmen und Einlagen",
+                    "Nur für Steuern",
+                    "Nur für Gehälter"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 298,
+                question: "Nennen Sie wesentliche Steuerarten.",
+                options: [
+                    "Nur Einkommensteuer",
+                    "Umsatzsteuer, Einkommensteuer, Körperschaftsteuer, Gewerbesteuer, Kfz-Steuer",
+                    "Nur Mehrwertsteuer",
+                    "Nur Kirchensteuer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 299,
+                question: "Welche Steuern zahlt ein Taxiunternehmer?",
+                options: [
+                    "Keine",
+                    "Umsatzsteuer, Einkommensteuer, Gewerbesteuer, Kfz-Steuer, Mineralölsteuer",
+                    "Nur Kirchensteuer",
+                    "Nur Grundsteuer"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            },
+            {
+                id: 300,
+                question: "Worauf muss man Umsatzsteuer zahlen?",
+                options: [
+                    "Auf alles",
+                    "Auf Lieferungen und Leistungen gegen Entgelt im Inland",
+                    "Nur auf Einnahmen",
+                    "Nur auf Gewinn"
+                ],
+                correctAnswer: "B",
+                userAnswer: null,
+                isAnswered: false
+            }
+            // Fortsetzung der Fragen 101-200...
+            // Aus Platzgründen nur ein Teil der Fragen hier gezeigt
+        ];
+
+        // Für das Beispiel hier nur 100 Fragen eingefügt
+        // In der Vollversion würden alle 300 Fragen enthalten sein
+        
+        // Fortsetzung für Fragen 101-300...
+        // Hier werden Platzhalter für die restlichen Fragen hinzugefügt
+        
+
+        // Statistik-Variablen
+        let answeredCount = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let currentFilter = 'all';
+
+        // Fragencontainer holen
+        const questionsContainer = document.getElementById('questions-container');
+
+        // Alle Fragen generieren und einfügen
+        function renderQuestions() {
+            questionsContainer.innerHTML = '';
+            
+            const filteredQuestions = questions.filter(q => {
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'unanswered') return !q.isAnswered;
+                if (currentFilter === 'correct') return q.isAnswered && q.userAnswer === q.correctAnswer;
+                if (currentFilter === 'incorrect') return q.isAnswered && q.userAnswer !== q.correctAnswer;
+                return true;
+            });
+            
+            document.getElementById('question-count').textContent = 
+                `Angezeigt: ${filteredQuestions.length}/300 Fragen`;
+            
+            filteredQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'container main_box';
+                questionDiv.id = `question-${q.id}`;
+                
+                questionDiv.innerHTML = `
+                    <div class="container question">
+                        <span class="question-number">${q.id}</span>${q.question}
+                    </div>
+                    <div class="container options">
+                        <label for="Q${q.id}A">
+                            <div id="OPTQ${q.id}A" class="opt ${getOptionClass(q, 'A')}">
+                                <input type="radio" name="Q${q.id}" id="Q${q.id}A" value="A" 
+                                       onchange="handleAnswer(${q.id}, 'A', '${q.correctAnswer}')" ${q.isAnswered ? 'disabled' : ''}>
+                                A) ${q.options[0]}
+                            </div>
+                        </label>
+                        <label for="Q${q.id}B">
+                            <div id="OPTQ${q.id}B" class="opt ${getOptionClass(q, 'B')}">
+                                <input type="radio" name="Q${q.id}" id="Q${q.id}B" value="B" 
+                                       onchange="handleAnswer(${q.id}, 'B', '${q.correctAnswer}')" ${q.isAnswered ? 'disabled' : ''}>
+                                B) ${q.options[1]}
+                            </div>
+                        </label>
+                        <label for="Q${q.id}C">
+                            <div id="OPTQ${q.id}C" class="opt ${getOptionClass(q, 'C')}">
+                                <input type="radio" name="Q${q.id}" id="Q${q.id}C" value="C" 
+                                       onchange="handleAnswer(${q.id}, 'C', '${q.correctAnswer}')" ${q.isAnswered ? 'disabled' : ''}>
+                                C) ${q.options[2]}
+                            </div>
+                        </label>
+                        <label for="Q${q.id}D">
+                            <div id="OPTQ${q.id}D" class="opt ${getOptionClass(q, 'D')}">
+                                <input type="radio" name="Q${q.id}" id="Q${q.id}D" value="D" 
+                                       onchange="handleAnswer(${q.id}, 'D', '${q.correctAnswer}')" ${q.isAnswered ? 'disabled' : ''}>
+                                D) ${q.options[3]}
+                            </div>
+                        </label>
+                    </div>
+                    <span class="hidden" id="ANSQ${q.id}">${q.correctAnswer}</span>
+                `;
+                
+                // Wenn die Frage beantwortet wurde, den entsprechenden Radio-Button auswählen
+                if (q.userAnswer) {
+                    const radio = questionDiv.querySelector(`#Q${q.id}${q.userAnswer}`);
+                    if (radio) radio.checked = true;
+                }
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Funktion zur Bestimmung der CSS-Klasse für eine Option
+        function getOptionClass(question, optionLetter) {
+            if (!question.isAnswered) return '';
+            if (optionLetter === question.correctAnswer) return 'correct';
+            if (optionLetter === question.userAnswer && optionLetter !== question.correctAnswer) return 'incorrect';
+            return '';
+        }
+
+        // Funktion zur Handhabung der Antwortauswahl
+        function handleAnswer(questionId, userAnswer, correctAnswer) {
+            const questionIndex = questionId - 1;
+            const question = questions[questionIndex];
+            
+            // Wenn die Frage bereits beantwortet wurde, nichts tun
+            if (question.isAnswered) return;
+            
+            // Benutzerantwort speichern
+            question.userAnswer = userAnswer;
+            question.isAnswered = true;
+            
+            // Statistik aktualisieren
+            answeredCount++;
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+            } else {
+                incorrectCount++;
+            }
+            
+            // Radio-Buttons für diese Frage deaktivieren
+            disableQuestionRadioButtons(questionId);
+            
+            // Statistik und Anzeige aktualisieren
+            updateStats();
+            updateQuestionDisplay(questionId);
+            
+            // Bei Filterung nach Unbeantworteten, Frage aus der Anzeige entfernen
+            if (currentFilter === 'unanswered') {
+                renderQuestions();
+            }
+        }
+
+        // Funktion zum Deaktivieren der Radio-Buttons einer Frage
+        function disableQuestionRadioButtons(questionId) {
+            const inputs = document.querySelectorAll(`input[name="Q${questionId}"]`);
+            inputs.forEach(input => {
+                input.disabled = true;
+            });
+        }
+
+        // Funktion zur Aktualisierung der Anzeige einer spezifischen Frage
+        function updateQuestionDisplay(questionId) {
+            const questionIndex = questionId - 1;
+            const question = questions[questionIndex];
+            
+            ['A', 'B', 'C', 'D'].forEach(option => {
+                const optDiv = document.getElementById(`OPTQ${questionId}${option}`);
+                if (optDiv) {
+                    optDiv.classList.remove('correct', 'incorrect');
+                    if (option === question.correctAnswer) {
+                        optDiv.classList.add('correct');
+                    } else if (option === question.userAnswer && option !== question.correctAnswer) {
+                        optDiv.classList.add('incorrect');
+                    }
+                }
+            });
+        }
+
+        // Funktion zur Aktualisierung der Statistik
+        function updateStats() {
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('correct').textContent = correctCount;
+            document.getElementById('incorrect').textContent = incorrectCount;
+            document.getElementById('remaining').textContent = 300 - answeredCount;
+            
+            const percentage = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+            document.getElementById('percentage').textContent = percentage;
+            
+            // Fortschrittsbalken aktualisieren
+            const progressPercent = (answeredCount / 300) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+        }
+
+        // Funktion zum Prüfen aller Antworten
+        function checkAllAnswers() {
+            questions.forEach((q, index) => {
+                const questionId = q.id;
+                const correctAnswer = q.correctAnswer;
+                
+                // Wenn die Frage noch nicht beantwortet wurde, automatisch die richtige Antwort auswählen
+                if (!q.isAnswered) {
+                    const questionIndex = questionId - 1;
+                    const question = questions[questionIndex];
+                    
+                    question.userAnswer = correctAnswer;
+                    question.isAnswered = true;
+                    
+                    answeredCount++;
+                    correctCount++;
+                    
+                    disableQuestionRadioButtons(questionId);
+                }
+            });
+            
+            updateStats();
+            renderQuestions();
+        }
+
+        // Funktion zum Zurücksetzen aller Fragen
+        function resetAll() {
+            questions.forEach((q, index) => {
+                const questionId = q.id;
+                
+                // Frage zurücksetzen
+                q.userAnswer = null;
+                q.isAnswered = false;
+            });
+            
+            // Statistik zurücksetzen
+            answeredCount = 0;
+            correctCount = 0;
+            incorrectCount = 0;
+            
+            updateStats();
+            renderQuestions();
+        }
+
+        // Funktion zum Anzeigen aller richtigen Antworten
+        function showAllAnswers() {
+            questions.forEach((q, index) => {
+                const questionId = q.id;
+                const correctAnswer = q.correctAnswer;
+                
+                // Richtige Antwort hervorheben
+                const correctOpt = document.getElementById(`OPTQ${questionId}${correctAnswer}`);
+                if (correctOpt && !q.isAnswered) {
+                    correctOpt.classList.add('correct');
+                }
+            });
+        }
+
+        // Filter-Funktionen
+        function filterQuestions(filter) {
+            currentFilter = filter;
+            
+            // Aktive Klasse setzen
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderQuestions();
+        }
+
+        // Scroll-Funktionen
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Initialisierung
+        updateStats();
+        renderQuestions();
+    </script>
+</body>
+</html>
+```
+
